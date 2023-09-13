@@ -39,3 +39,6 @@ JOIN matriculas ON alunos.id = matriculas.aluno_id ORDER BY aluno, curso;
 
 SELECT escritores.nome AS escritor, livros.titulo AS livro FROM escritores
 LEFT JOIN livros ON escritores.id = livros.escritor_id ORDER BY escritor, livro;
+
+SELECT alunos.nome AS aluno, matriculas.curso FROM matriculas
+RIGHT JOIN alunos ON matriculas.aluno_id = alunos.id ORDER BY curso, aluno;
