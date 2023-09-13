@@ -8,3 +8,6 @@ INNER JOIN escritores ON livros.escritor_id = escritores.id WHERE nome.escritore
 
 SELECT alunos.nome, matricula.curso FROM alunos
 INNER JOIN matriculas ON alunos.id = matriculados.aluno_id WHERE matricula.curso = 'Engenharia de Software';
+
+SELECT produto, SUM(receita) AS receita_numero FROM vendas
+GROUP BY produto;
