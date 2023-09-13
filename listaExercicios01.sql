@@ -18,3 +18,7 @@ LEFT JOIN livros ON autores.id = livros.autor_id GROUP BY autores.id ORDER BY au
 SELECT curso, COUNT(aluno_id) AS alunos_matriculados FROM matriculas
 GROUP BY curso 
 ORDER BY curso;
+
+SELECT produto, AVG(receita) AS num_receita FROM vendas
+GROUP BY produto 
+ORDER BY produto;
