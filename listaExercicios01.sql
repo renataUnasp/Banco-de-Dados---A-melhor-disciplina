@@ -11,3 +11,6 @@ INNER JOIN matriculas ON alunos.id = matriculados.aluno_id WHERE matricula.curso
 
 SELECT produto, SUM(receita) AS receita_numero FROM vendas
 GROUP BY produto;
+
+SELECT autores.nome AS autor, COUNT(livros.id) AS livros_todos FROM autores
+LEFT JOIN livros ON autores.id = livros.autor_id GROUP BY autores.id ORDER BY autores.id;
