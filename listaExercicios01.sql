@@ -22,3 +22,7 @@ ORDER BY curso;
 SELECT produto, AVG(receita) AS num_receita FROM vendas
 GROUP BY produto 
 ORDER BY produto;
+
+SELECT produto, SUM(receita) AS total_receitas FROM vendas
+GROUP BY produto 
+HAVING SUM(receita) > '10.000' ORDER BY produto;
