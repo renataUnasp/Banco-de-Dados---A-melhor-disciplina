@@ -14,3 +14,7 @@ GROUP BY produto;
 
 SELECT autores.nome AS autor, COUNT(livros.id) AS livros_todos FROM autores
 LEFT JOIN livros ON autores.id = livros.autor_id GROUP BY autores.id ORDER BY autores.id;
+
+SELECT curso, COUNT(aluno_id) AS alunos_matriculados FROM matriculas
+GROUP BY curso 
+ORDER BY curso;
