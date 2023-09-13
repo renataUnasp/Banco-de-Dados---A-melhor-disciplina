@@ -54,3 +54,6 @@ WHERE id = (
    ORDER BY COUNT(*) desc
    LIMIT 1
 );
+
+SELECT produto, SUM(receita) AS menor_receita FROM vendas
+GROUP BY produto ORDER BY menor_receita LIMIT 1;
