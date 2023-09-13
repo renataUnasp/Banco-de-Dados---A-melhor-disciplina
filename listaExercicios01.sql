@@ -33,3 +33,6 @@ HAVING COUNT(livros.id) > '2';
 
 SELECT livros.titulo AS livro, escritores.nome AS autor FROM livros
 JOIN escritores ON livros.escritor_id = escritores.id ORDER BY escritor, livro;
+
+SELECT alunos.nome AS aluno, matriculas.curso FROM alunos 
+JOIN matriculas ON alunos.id = matriculas.aluno_id ORDER BY aluno, curso;
