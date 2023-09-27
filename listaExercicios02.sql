@@ -141,3 +141,39 @@ END;
 DELIMITER ;
 
 CALL sp_TitulosPorCategoria('Comedia');
+
+7 //
+
+DELIMITER //
+
+CREATE PROCEDURE sp_AdicionarLivro(
+IN Titulo_Livro VARCHAR(255),
+IN Editora_Id INT,
+IN Ano_Publicacao INT,
+IN Numero_Paginas INT,
+IN Categoria_Id INT
+)
+BEGIN
+
+
+IF Titulo_Livro IS NULL OR Editora_ID IS NULL OR Ano_Publicacao IS NULL OR Numero_Paginas IS NULL OR categoria_ID IS NULL THEN
+    SELECT 'Erro: Nenhum dos parâmetros pode ser nulo.' AS Status;
+ELSE
+    IF EXISTS (SELECT 1 FROM livro WHERE Titulo = Titulo_Livro) THEN
+        SELECT 'Erro: O livro com esse título já existe na tabela.' AS Status;
+    ELSE
+        INSERT INTO Livro (Titulo, Editora_ID, Ano_Publicacao, Numero_Paginas, Categoria_ID)
+        VALUES (Titulo_Livro, Editora_id, Ano_Publicacao, Numero_Paginas, Categoria_id);
+
+        SELECT 'Livro adicionado com sucesso.' AS Status;
+    END IF;
+END IF;
+
+
+
+END;
+//
+
+DELIMITER ;
+
+CALL sp_AdicionarLivro('Táticas do amor', 1, 2023, 304, 1);
