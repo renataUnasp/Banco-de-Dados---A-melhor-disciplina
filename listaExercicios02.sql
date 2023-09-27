@@ -242,3 +242,45 @@ DELIMITER ;
 CALL sp_ListarAutores();
 -- invoca sp_ListaAutores();
 
+10 //
+
+DELIMITER //
+
+CREATE PROCEDURE sp_LivrosESeusAutores()
+BEGIN
+DECLARE Titulo_Livro VARCHAR(255);
+DECLARE Nome_Autor VARCHAR(255);
+DECLARE Sobrenome_Autor VARCHAR(255);
+
+
+
+DECLARE Cursor_Livros CURSOR FOR
+SELECT Titulo_Livro , Nome_Autor, (Sobrenome_Autor)
+FROM Livro
+INNER JOIN Autor_Livro ON Livro.Livro_ID = Autor_Livro.Livro_ID
+INNER JOIN Autor ON Autor_Livro.Autor_ID = Autor.Autor_ID;
+
+OPEN Cursor_Livros;
+
+SELECT 'Título do Livro', 'Nome do Autor', 'Sobrenome do Autor';
+
+livros_Autor_loop: LOOP
+    FETCH Cursor_Livros INTO Titulo_Livro, Nome_Autor, Sobrenome_Autor;
+    IF Titulo_Livro IS NULL THEN
+        LEAVE livros_Autor_loop;
+    END IF;
+
+    -- Detalhes do autor e do livro
+    SELECT Titulo_Livro, Nome_Autor, Sobrenome_Autor;
+END LOOP livros_Autor_loop;
+
+-- Fechar o cursor
+CLOSE Cursor_Livros;
+
+
+
+END;
+//
+
+DELIMITER ;
+CALL sp_LivrosESeusAutores();
