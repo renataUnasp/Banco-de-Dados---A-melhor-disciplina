@@ -177,3 +177,46 @@ END;
 DELIMITER ;
 
 CALL sp_AdicionarLivro('Táticas do amor', 1, 2023, 304, 1);
+
+8 //
+
+DELIMITER //
+
+CREATE PROCEDURE sp_AutorMaisAntigo(OUT nome_autor_antigo VARCHAR(255))
+BEGIN
+DECLARE Datadonascimento DATE;
+DECLARE nome_autor_antigo VARCHAR(255);
+SET Datadonascimento = NULL;
+DECLARE EXIT HANDLER FOR NOT FOUND SET nome_autor_antigo = NULL;
+
+
+DECLARE Cursor_Autor CURSOR FOR
+SELECT nome, Datadonascimento
+FROM Autor
+WHERE Datadonascimento IS NOT NULL;
+
+OPEN Cursor_Autor;
+
+Autor_loop: LOOP
+    FETCH Cursor_Autor INTO nome_autor_antigo, Datadonascimento;
+    IF nome_autor_antigo IS NULL THEN
+        LEAVE Autor_loop;
+    END IF;
+
+    IF Datadonascimento IS NULL OR Datadonascimento > Datadonascimento THEN
+        SET Datadonascimento = Datadonascimento;
+        SET nome_do_autor = nome_autor_antigo;
+    END IF;
+END LOOP Autor_loop;
+CLOSE Cursor_Autor;
+
+
+
+END;
+//
+
+DELIMITER ;
+
+CALL sp_AutorMaisAntigo(@nomeautorantigo);
+SELECT @nomeautorantigo AS 'Nome Autor Antigo';
+
