@@ -49,8 +49,43 @@ END;
 DELIMITER ;
 
 --atribuindo valores:
-CALL sp_ContarLivrosPorCategoria('Romance', @total_livros);
-CALL sp_ContarLivrosPorCategoria('Ciência', @total_livros);
-CALL sp_ContarLivrosPorCategoria('Ficção Científica', @total_livros);
-CALL sp_ContarLivrosPorCategoria('História', @total_livros);
-CALL sp_ContarLivrosPorCategoria('Autoajuda', @total_livros);
+CALL sp_ContarLivrosPorCategoria('Romance', @Total_Livros);
+CALL sp_ContarLivrosPorCategoria('Comedia', @Total_Livros);
+CALL sp_ContarLivrosPorCategoria('Suspense', @Total_Livros);
+CALL sp_ContarLivrosPorCategoria('Mistério', @Total_Livros);
+
+4 // 
+
+DELIMITER //
+
+CREATE PROCEDURE sp_VerificarLivrosCategoria(IN Nome_Categoria VARCHAR(100), OUT Livros_Possuidos VARCHAR(3))
+BEGIN
+
+
+DECLARE contador INT;
+SET contador = 0;
+
+SELECT COUNT(*) INTO contador
+FROM livro
+INNER JOIN Categoria ON livro.Categoria_ID = Categoria.Categoria_ID
+WHERE Categoria.Nome = Nome_Categoria;
+
+IF contador > 0 THEN
+    SET Livros_Possuidos = 'Sim';
+ELSE
+    SET Livros_Possuidos = 'Não';
+END IF;
+
+
+
+END;
+//
+
+DELIMITER ;
+
+CALL sp_VerificarLivrosCategoria('Romance', @Livros_Possuidos);
+CALL sp_VerificarLivrosCategoria('Comedia', @Livros_Possuidos);
+CALL sp_VerificarLivrosCategoria('Suspense',@Livros_Possuidos);
+CALL sp_VerificarLivrosCategoria('Mistério', @Livros_Possuidos);
+
+SELECT @Livros_Possuidos;
