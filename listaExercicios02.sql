@@ -37,7 +37,7 @@ CALL sp_LivrosPorCategoria('Mistério');
 
 DELIMITER //
 
-CREATE PROCEDURE sp_ContarLivrosPorCategoria(IN Nome_Categoria VARCHAR(200), OUT Total_Livros INT)
+CREATE PROCEDURE sp_ContarLivrosPorCategoria(IN Nome_Categoria VARCHAR(100), OUT Total_Livros INT)
 BEGIN
 SELECT COUNT(*) INTO Total_Livros
 FROM Livro
@@ -105,3 +105,39 @@ END;
 DELIMITER ;
 
 CALL sp_LivrosAteAno(2017);
+
+6 //
+
+DELIMITER //
+
+CREATE PROCEDURE sp_TitulosPorCategoria(IN Nome_Categoria VARCHAR(100))
+BEGIN
+
+
+DECLARE titulo_do_livro VARCHAR(255);
+
+DECLARE cursors_Livros CURSOR FOR
+    SELECT Livro.Titulo
+    FROM livro
+    INNER JOIN Categoria ON livro.Categoria_ID = Categoria.Categoria_ID
+    WHERE Categoria.Nome = Nome_Categoria;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET titulo_do_livro = NULL;
+
+OPEN cursor_Livros;
+read_loop: LOOP
+    FETCH cursor_Livros INTO titulo_do_livro;
+    IF titulo_do_livro IS NULL THEN
+        LEAVE read_loop;
+    END IF;
+    SELECT titulo_do_livro;
+END LOOP;
+CLOSE cursor_Livros;
+
+
+
+END;
+//
+
+DELIMITER ;
+
+CALL sp_TitulosPorCategoria('Comedia');
