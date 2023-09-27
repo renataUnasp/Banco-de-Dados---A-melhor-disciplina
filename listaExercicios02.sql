@@ -89,3 +89,19 @@ CALL sp_VerificarLivrosCategoria('Suspense',@Livros_Possuidos);
 CALL sp_VerificarLivrosCategoria('Mistério', @Livros_Possuidos);
 
 SELECT @Livros_Possuidos;
+
+5 //
+
+DELIMITER //
+
+CREATE PROCEDURE sp_LivrosAteAno(IN ano_especifico INT)
+BEGIN
+SELECT Titulo, Publicacao_Ano
+FROM Livro
+WHERE Publicacao_Ano <= Ano_Especifico;
+END;
+//
+
+DELIMITER ;
+
+CALL sp_LivrosAteAno(2017);
