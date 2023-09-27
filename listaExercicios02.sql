@@ -220,3 +220,25 @@ DELIMITER ;
 CALL sp_AutorMaisAntigo(@nomeautorantigo);
 SELECT @nomeautorantigo AS 'Nome Autor Antigo';
 
+9 //
+
+-- Delimiter: É ou sequência de caracteres ou um só usado para
+DELIMITER //
+
+-- Create procedure: Permite criar procedimentos para guardar várias instruções SQL.
+CREATE PROCEDURE sp_ListarAutores()
+-- O begin é usada junto com END para definir algo
+BEGIN
+-- esse select retorna o sobrenome e o nome dos autores
+SELECT Nome, Sobrenome
+FROM Autor;
+
+-- o end: serve para finalizar 
+END;
+//
+
+DELIMITER ;
+
+CALL sp_ListarAutores();
+-- invoca sp_ListaAutores();
+
