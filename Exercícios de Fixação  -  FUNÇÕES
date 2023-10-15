@@ -1,0 +1,181 @@
+1// 
+
+a)
+CREATE TABLE nomes (
+nome VARCHAR(50)
+); 
+
+INSERT INTO nomes (nome) VALUES
+('Roberta'),
+('Roberto'), 
+('Maria Clara'), 
+('João');
+
+
+b) 
+UPDATE nomes SET nome = UPPER(nome);
+
+
+c) 
+SELECT nome, 
+LENGTH(nome) AS tamanho FROM nomes;
+
+
+d) 
+UPDATE nomes SET nome = CONCAT(IF(nome LIKE '%Renata%', 'Sr. ', 'Sra. '), nome);
+
+
+
+2// 
+
+a) 
+CREATE TABLE produtos (
+produto VARCHAR(50), 
+preco DECIMAL(10, 2), 
+quantidade INT);
+
+
+b) 
+UPDATE produtos SET preco = ROUND(preco, 2);
+
+
+c) 
+SELECT produto, ABS(quantidade) FROM produtos;
+
+
+d) 
+SELECT AVG(preco) FROM produtos;
+
+
+
+3// 
+
+a) 
+CREATE TABLE eventos (
+data_evento DATE
+);
+INSERT INTO eventos (data_evento) VALUES ('2023-10-15'), 
+('2023-10-10'), 
+('2023-10-20');
+
+
+b) 
+INSERT INTO eventos (data_evento) VALUES (NOW());
+
+
+c)
+SELECT DATEDIFF('2023-10-15', '2023-10-10');
+
+
+d)
+SELECT data_evento, 
+DAYNAME(data_evento) FROM eventos;
+
+
+
+4// 
+
+a) 
+SELECT produtos, 
+IF (quantidade = 0, 'Fora de estoque', 'Em estoque') AS status FROM produtos;
+
+
+b)
+SELECT produto, 
+    CASE
+        WHEN preco < 10 THEN 'Barato'
+        WHEN preco >= 10 AND preco < 50 THEN 'Médio'
+        ELSE 'Caro'
+    END AS categoria
+FROM produtos;
+
+
+
+5// 
+
+a) 
+DELIMITER //
+CREATE FUNCTION TOTAL_VALOR(preco DECIMAL(10, 2), quantidade INT)
+RETURNS DECIMAL(10, 2)
+BEGIN
+    RETURN preco * quantidade;
+END;
+//
+DELIMITER ;
+
+
+b) 
+SELECT produto, TOTAL_VALOR(preco, quantidade) AS valor_total FROM produtos;
+
+
+
+6// 
+
+a)
+SELECT COUNT(*) FROM produtos;
+
+
+b) 
+SELECT produto, MAX(preco) FROM produtos;
+
+
+c) 
+SELECT produto, MIN(preco) FROM produtos;
+
+
+d) 
+SELECT SUM(IF(quantidade > 0, preco, 0)) AS soma_total FROM produtos;
+
+
+
+7// 
+
+a) 
+DELIMITER //
+CREATE FUNCTION Fatorial(n INT)
+RETURNS INT
+BEGIN
+    DECLARE result INT;
+    SET result = 1;
+    WHILE n > 0 DO
+        SET result = result * n;
+        SET n = n - 1;
+    END WHILE;
+    RETURN result;
+END;
+//
+DELIMITER ;
+
+
+b)
+DELIMITER //
+CREATE FUNCTION Exponencial(base DECIMAL(10, 2), expoente INT)
+RETURNS DECIMAL(10, 2)
+BEGIN
+    DECLARE result DECIMAL(10, 2);
+    SET result = 1;
+    WHILE expoente > 0 DO
+        SET result = result * base;
+        SET expoente = expoente - 1;
+    END WHILE;
+    RETURN result;
+END;
+//
+DELIMITER ;
+
+
+c) 
+DELIMITER //
+CREATE FUNCTION Palindromo(palavra VARCHAR(50))
+RETURNS INT
+BEGIN
+    DECLARE reversed VARCHAR(50);
+    SET reversed = REVERSE(palavra);
+    IF palavra = reversed THEN
+        RETURN 1;
+    ELSE
+        RETURN 0;
+    END IF;
+END;
+//
+DELIMITER ;
